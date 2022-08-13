@@ -3,6 +3,9 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 
 const userRoutes = require("./Routes/userRoutes");
+const incidentRoutes = require("./Routes/incidentRoutes");
+
+
 dotenv.config({path:"./.env"});
 require("./server");
 
@@ -11,6 +14,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/user", userRoutes);
+app.use("/incident", incidentRoutes);
 
 const port = process.env.PORT || 8000;
 

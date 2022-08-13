@@ -2,9 +2,14 @@ const mongoose = require("mongoose");
 
 // INCIDENT SCHEMA
 const incidentSchema = mongoose.Schema({
+    
+    incidentNo: {
+     type: String,
+     required: true,
+    },
 
     date: {
-    type: number,
+    type: String,
     required: true,
     },
 
@@ -13,10 +18,16 @@ const incidentSchema = mongoose.Schema({
     required: true,
     },
 
-    ip : {
-    type: number,
+    source : {
+    type: String,
     required: true,
 
+    },
+
+    Destination : {
+    type: String,
+    required: true,
+    
     },
 
     reason: {
