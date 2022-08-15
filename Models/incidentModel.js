@@ -8,7 +8,17 @@ const incidentSchema = mongoose.Schema({
      required: true,
     },
 
-    date: {
+    meanTime: {
+    type: String,
+    required: true,
+    },
+
+    DetectionTime: {
+    type: String,
+    required: true,
+    },
+
+    ResponseTime: {
     type: String,
     required: true,
     },
@@ -36,6 +46,16 @@ const incidentSchema = mongoose.Schema({
     },
 
     action: {
+    type: String,
+    required: true,    
+    },
+
+    reportedBy: {
+    type: String,
+    required: true,    
+    },
+
+    status: {
     type: String,
     required: true,    
     },

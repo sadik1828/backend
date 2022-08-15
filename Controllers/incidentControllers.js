@@ -74,7 +74,7 @@ exports.editIncident = async(req, res)=>{
 
 exports.deleteIncident = async(req, res)=>{
     try {
-        await Incident.findByIdAndDelete(req.params.id, req.body);
+        await Incident.findByIdAndDelete(req.params.id);
         res.status(200).json({attackMessage: "deleted incident attack"});
 
 
