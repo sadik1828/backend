@@ -13,12 +13,12 @@ const incidentSchema = mongoose.Schema({
     required: true,
     },
 
-    DetectionTime: {
+    detectionTime: {
     type: String,
     required: true,
     },
 
-    ResponseTime: {
+    responseTime: {
     type: String,
     required: true,
     },
