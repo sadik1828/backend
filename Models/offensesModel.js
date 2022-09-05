@@ -1,29 +1,18 @@
 const mongoose = require("mongoose");
 
 // INCIDENT SCHEMA
-const incidentSchema = mongoose.Schema({
-    
-    IncidentNo: {
-     type: String,
-     required: true,
-    },
-
-    MeanTime: {
+const offenseSchema = mongoose.Schema({
+    OffenseNo: {
     type: String,
     required: true,
     },
 
-    DetectionTime: {
+    OffenseDate: {
     type: String,
     required: true,
     },
 
-    ResponseTime: {
-    type: String,
-    required: true,
-    },
-
-    TypeOfAttack: {
+    UserAccount: {
     type: String,
     required: true,
     },
@@ -45,18 +34,12 @@ const incidentSchema = mongoose.Schema({
     required: true,
     },
 
-    Investigator: {
-        type: String,
-        required: true,
-        },
-    
-
     Action: {
     type: String,
     required: true,    
     },
 
-    ReportedBy: {
+    Shift: {
     type: String,
     required: true,    
     },
@@ -74,6 +57,6 @@ const incidentSchema = mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }    
 })
 
-const incidentModel = mongoose.model("Incident", incidentSchema);
+const offenseModel = mongoose.model("Offense", offenseSchema);
 
-module.exports = incidentModel;
+module.exports = offenseModel;

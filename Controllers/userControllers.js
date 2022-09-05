@@ -62,6 +62,7 @@ try {
 
 } catch (e) {
     res.status(401).json({clientMessage:"error signup"})
+    console.log(e.message);
 }
 };
 
@@ -73,7 +74,7 @@ try {
 exports.login = async(req, res) => {
     try {
         // checking if user already exist in the database
-        const userInfo = await User.findOne({email: req.body.password});
+        const userInfo = await User.findOne({email: req.body.email});
         
         // if user not found send your not found
         if (!userInfo){
@@ -114,9 +115,9 @@ exports.changePassword = async (req, res) => {
     try {
         
         //1. find the user from DB
-        const userInfo = await User.findOne({ email: req.body.email })
+        const userInfo = await User.findOne({ email: req.userInfo })
         if (!userInfo) {
-            return res.status(200).json({ clientMessage: "user if found" });
+            return res.status(200).json({ clientMessage: "user not found" });
         }
 
         //2. oldpassword === hashed password inside db
@@ -148,11 +149,13 @@ exports.changePassword = async (req, res) => {
 
         const encryptPassword = await bcrypt.hash(req.body.newPassword, 10);
 
-        await User.findOneAndUpdate({email: userInfo.email}, {password:hashedPassword});
+        await User.findOneAndUpdate({email: userInfo.email}, {password:encryptPassword});
 
         res.status(200).json({clientMessage: "Password Changed"});
     } catch (error) {
-        res.status(400).json({ clientMessagee: "error occured" });
+        console.log(error.message);
+        res.status(400).json({ clientMessage: "error occured" });
+
     }
 
 };
@@ -160,10 +163,13 @@ exports.changePassword = async (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 exports.protect = (req,res, next ) => {
     try {
+       
     const token= req.headers.authentication
+    console.log(token);
     // 1. token is empty
     if (!token){
         return res.status(401).message({clientMessage: "you are not logged in"});
+    
     }
     
     // 2. token is verify
@@ -172,7 +178,7 @@ exports.protect = (req,res, next ) => {
         if (err){
             return res.status(400).json({clientMessage: "login session expire"});
         }
-        // console.log(decoded.data);
+        console.log(decoded.data);
         req.userInfo = decoded.data
     });
     
