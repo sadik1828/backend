@@ -106,7 +106,44 @@ exports.login = async(req, res) => {
       res.status(400).json({clientMessage: "error"});
     }
 }
+/////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////////
+
+// GET ALL THE USERS ONE TIME
+
+exports.getAll = async(req, res) =>{
+    try {
+        // find all attack numbers
+        // incidents has the data of all incidents
+
+       const allUsers = await User.find({});
+       res.status(200).json({ found: allUsers.length, allUsers });
+
+
+    } catch (error) {
+        res.status(401).json({clientMessage: "error"});
+    }
+};
+
+
+///////////////////////////////////////////////////////////////////
+
+// GET ALL THE USERS ONE TIME
+
+exports.getOne = async(req, res) =>{
+    try {
+        // find all attack numbers
+        // incidents has the data of all incidents
+
+       const oneUser = await User.findById(req.params.id);
+       res.status(200).json({ found: oneUser.length, oneUser });
+
+
+    } catch (error) {
+        res.status(401).json({clientMessage: "error"});
+    }
+};
 
 //////////////////////////////////////////////////////
 // CHANGE PASSWORD PART
@@ -153,12 +190,42 @@ exports.changePassword = async (req, res) => {
 
         res.status(200).json({clientMessage: "Password Changed"});
     } catch (error) {
-        console.log(error.message);
+        console.log(error.clientMessage);
         res.status(400).json({ clientMessage: "error occured" });
 
     }
 
 };
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+// CHANGING NAME
+
+exports.changeEmail = async (req,res) =>{
+    try {
+
+        // find the Email from database
+
+        const userInfo = await User.findOne({ email: req.body.email })
+        if (!userInfo) {
+            return res.status(200).json({ clientMessage: "email not found" });
+        }
+
+        // Checking Same Email
+
+        if (userInfo.email === req.body.email){
+            return res.status(400).json({clientMessage: "Same Email"})
+        }
+
+        // Updating the Email
+        await User.findOneAndUpdate(userInfo.email, req.body.email);
+        res.status(200).json({clientMessage: "Email is Changed"});
+    } catch (error) {
+        res.status(400).json({clientMessage: "error email"});
+    }
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 exports.protect = (req,res, next ) => {

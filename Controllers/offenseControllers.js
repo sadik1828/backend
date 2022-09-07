@@ -12,7 +12,7 @@ exports.create = async(req, res) =>{
             return res.status(401).json({clientMessage: "same attack id is found"});
         }
 
-        // save the attack
+        // save the offense
         await Offense.create(req.body);
         res.status(200).json({clientMessage: "offense is created"});
 
